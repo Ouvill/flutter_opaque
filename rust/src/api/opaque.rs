@@ -131,7 +131,7 @@ pub fn client_registration_start(
     let state_id = next_id();
     CLIENT_REG_STORE
         .lock()
-        .unwrap()
+        .map_err(|_| "state store unavailable".to_string())?
         .insert(state_id, result.state);
     Ok(ClientRegistrationStartResult {
         state_id,
@@ -150,7 +150,7 @@ pub fn client_registration_finish(
 ) -> Result<ClientRegistrationFinishResult, String> {
     let state = CLIENT_REG_STORE
         .lock()
-        .unwrap()
+        .map_err(|_| "state store unavailable".to_string())?
         .remove(&state_id)
         .ok_or_else(|| format!("No client registration state for id={state_id}"))?;
 
@@ -216,7 +216,7 @@ pub fn client_login_start(password: Vec<u8>) -> Result<ClientLoginStartResult, S
     let state_id = next_id();
     CLIENT_LOG_STORE
         .lock()
-        .unwrap()
+        .map_err(|_| "state store unavailable".to_string())?
         .insert(state_id, result.state);
     Ok(ClientLoginStartResult {
         state_id,
@@ -235,7 +235,7 @@ pub fn client_login_finish(
 ) -> Result<ClientLoginFinishResult, String> {
     let state = CLIENT_LOG_STORE
         .lock()
-        .unwrap()
+        .map_err(|_| "state store unavailable".to_string())?
         .remove(&state_id)
         .ok_or_else(|| format!("No client login state for id={state_id}"))?;
 
@@ -293,7 +293,7 @@ pub fn server_login_start(
     let state_id = next_id();
     SERVER_LOG_STORE
         .lock()
-        .unwrap()
+        .map_err(|_| "state store unavailable".to_string())?
         .insert(state_id, result.state);
 
     Ok(ServerLoginStartResult {
@@ -312,7 +312,7 @@ pub fn server_login_finish(
 ) -> Result<Vec<u8>, String> {
     let state = SERVER_LOG_STORE
         .lock()
-        .unwrap()
+        .map_err(|_| "state store unavailable".to_string())?
         .remove(&state_id)
         .ok_or_else(|| format!("No server login state for id={state_id}"))?;
 
