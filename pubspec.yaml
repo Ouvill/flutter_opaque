@@ -1,7 +1,7 @@
 name: flutter_opaque
-description: "A new Flutter plugin project."
+description: "Flutter plugin for the OPAQUE password-authenticated key exchange protocol, powered by Rust via flutter_rust_bridge."
 version: 0.0.1
-homepage:
+homepage: https://github.com/Ouvill/flutter_opaque
 
 environment:
   sdk: ^3.10.1
